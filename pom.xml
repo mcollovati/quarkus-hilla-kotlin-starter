@@ -19,6 +19,7 @@
 
         <quarkus-hilla.version>24.4.1</quarkus-hilla.version>
         <vaadin.version>24.4.10</vaadin.version>
+        <selenide.version>7.4.2</selenide.version>
 
     </properties>
 
@@ -75,6 +76,12 @@
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>kotlin-extensions</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.codeborne</groupId>
+            <artifactId>selenide</artifactId>
+            <version>${selenide.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
