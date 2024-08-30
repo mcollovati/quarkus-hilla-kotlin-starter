@@ -1,0 +1,51 @@
+name: Update NPM dependencies
+on:
+  workflow_dispatch:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+permissions:
+  pull-requests: write
+  contents: write
+jobs:
+  update-npm-deps:
+    runs-on: ubuntu-latest
+    name: Update NPM dependencies
+    if: github.actor == 'dependabot[bot]' || github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: 21
+          distribution: 'temurin'
+      - name: Production build
+        run: |
+          set -x -e -o pipefail
+          mvn -V -e -ntp package -Pproduction -DskipTests
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        id: commit-changes
+        with:
+          commit_message: "chore(npm-deps): update npm dependencies"
+          commit_user_name: "quarkus-hilla-bot[bot]"
+          commit_user_email: "141157179+quarkus-hilla-bot[bot]@users.noreply.github.com"
+          file_pattern: ':(glob)**/package*.json'
+          push_options: '--force-with-lease'
+      - name: Generate token
+        uses: tibdex/github-app-token@v2
+        if: ${{ steps.commit-changes.outputs.changes_detected == 'true' && github.event_name != 'workflow_dispatch' }}
+        id: generate-token
+        with:
+          app_id: ${{ secrets.QUARKUS_HILLA_BOT_ID }}
+          private_key: ${{ secrets.QUARKUS_HILLA_BOT_PRIVATE_KEY }}
+      - name: Comment PR
+        if: ${{ steps.commit-changes.outputs.changes_detected == 'true' && github.event_name != 'workflow_dispatch'}}
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
+          message: |
+            :heavy_check_mark: NPM dependencies updated 
