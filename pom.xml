@@ -18,7 +18,7 @@
         <surefire-plugin.version>3.5.1</surefire-plugin.version>
 
         <quarkus-hilla.version>24.4.2</quarkus-hilla.version>
-        <vaadin.version>24.4.12</vaadin.version>
+        <vaadin.version>24.4.13</vaadin.version>
         <selenide.version>7.5.1</selenide.version>
 
     </properties>
@@ -91,6 +91,13 @@
         <testSourceDirectory>src/test/kotlin</testSourceDirectory>
         <plugins>
             <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${compiler-plugin.version}</version>
+                <configuration>
+                    <parameters>true</parameters>
+                </configuration>
+            </plugin>
+            <plugin>
                 <!-- Workaround for hilla:init-app :: hilla-spring-boot-starter -->
                 <groupId>com.vaadin</groupId>
                 <artifactId>vaadin-maven-plugin</artifactId>
@@ -118,13 +125,6 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${compiler-plugin.version}</version>
-                <configuration>
-                    <parameters>true</parameters>
-                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
