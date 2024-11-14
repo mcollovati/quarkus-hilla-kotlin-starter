@@ -18,7 +18,7 @@
         <surefire-plugin.version>3.5.2</surefire-plugin.version>
 
         <quarkus-hilla.version>24.5.0</quarkus-hilla.version>
-        <vaadin.version>24.5.3</vaadin.version>
+        <vaadin.version>24.5.4</vaadin.version>
         <selenide.version>7.5.1</selenide.version>
 
     </properties>
@@ -26,16 +26,16 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>${quarkus.platform.group-id}</groupId>
-                <artifactId>${quarkus.platform.artifact-id}</artifactId>
-                <version>${quarkus.platform.version}</version>
+                <groupId>com.vaadin</groupId>
+                <artifactId>vaadin-bom</artifactId>
+                <version>${vaadin.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
             <dependency>
-                <groupId>com.vaadin</groupId>
-                <artifactId>vaadin-bom</artifactId>
-                <version>${vaadin.version}</version>
+                <groupId>${quarkus.platform.group-id}</groupId>
+                <artifactId>${quarkus.platform.artifact-id}</artifactId>
+                <version>${quarkus.platform.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
