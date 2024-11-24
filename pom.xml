@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.example</groupId>
     <artifactId>quarkus-hilla-kotlin-starter</artifactId>
@@ -15,6 +16,7 @@
         <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
         <quarkus.platform.version>3.16.4</quarkus.platform.version>
         <skipITs>true</skipITs>
+        <skipUTs>false</skipUTs>
         <surefire-plugin.version>3.5.2</surefire-plugin.version>
 
         <quarkus-hilla.version>24.5.0</quarkus-hilla.version>
@@ -133,7 +135,12 @@
                     <systemPropertyVariables>
                         <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
                         <maven.home>${maven.home}</maven.home>
+                        <selenide.reportsFolder>${project.build.directory}/selenide/selenide-reports
+                        </selenide.reportsFolder>
+                        <selenide.downloadsFolder>${project.build.directory}/selenide/downloads
+                        </selenide.downloadsFolder>
                     </systemPropertyVariables>
+                    <skip>${skipUTs}</skip>
                 </configuration>
             </plugin>
             <plugin>
@@ -149,7 +156,8 @@
                 </executions>
                 <configuration>
                     <systemPropertyVariables>
-                        <native.image.path>${project.build.directory}/${project.build.finalName}-runner</native.image.path>
+                        <native.image.path>${project.build.directory}/${project.build.finalName}-runner
+                        </native.image.path>
                         <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
                         <maven.home>${maven.home}</maven.home>
                     </systemPropertyVariables>
@@ -201,6 +209,19 @@
         <profile>
             <!-- Production mode is activated using -Pproduction -->
             <id>production</id>
+            <dependencies>
+                <dependency>
+                    <groupId>com.github.mcollovati</groupId>
+                    <artifactId>quarkus-hilla-react</artifactId>
+                    <version>${quarkus-hilla.version}</version>
+                    <exclusions>
+                        <exclusion>
+                            <groupId>com.vaadin</groupId>
+                            <artifactId>vaadin-dev</artifactId>
+                        </exclusion>
+                    </exclusions>
+                </dependency>
+            </dependencies>
             <build>
                 <plugins>
                     <plugin>
@@ -227,6 +248,7 @@
             </activation>
             <properties>
                 <skipITs>false</skipITs>
+                <skipUTs>true</skipUTs>
                 <quarkus.native.enabled>true</quarkus.native.enabled>
             </properties>
         </profile>
