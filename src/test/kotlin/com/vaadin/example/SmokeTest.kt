@@ -77,7 +77,7 @@ internal class SmokeTest {
         url: String?,
         selector: Supplier<SelenideElement?>
     ) {
-        Selenide.open(url)
+        Selenide.open(url!!)
         waitForDevServer()
         selector.get()!!.shouldBe(Condition.visible, Duration.ofSeconds(10))
         Selenide.`$`(
@@ -98,7 +98,7 @@ internal class SmokeTest {
         Selenide.Wait()
             .withTimeout(Duration.ofMinutes(20))
             .until<Boolean?>(Function { d: WebDriver? ->
-                java.lang.Boolean.TRUE != Selenide.executeJavaScript<Any?>(
+                java.lang.Boolean.TRUE != Selenide.executeJavaScript<Any>(
                     "return window.Vaadin && window.Vaadin.Flow && window.Vaadin.Flow.devServerIsNotLoaded;"
                 )
             })
