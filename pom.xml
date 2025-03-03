@@ -19,7 +19,7 @@
         <skipUTs>false</skipUTs>
         <surefire-plugin.version>3.5.2</surefire-plugin.version>
 
-        <quarkus-hilla.version>24.6.0</quarkus-hilla.version>
+        <quarkus-hilla.version>24.6.1</quarkus-hilla.version>
         <vaadin.version>24.6.5</vaadin.version>
         <selenide.version>7.7.3</selenide.version>
 
