@@ -10,7 +10,7 @@ import {
     useViewConfig,
 } from "@vaadin/hilla-file-router/runtime.js";
 import {Suspense, useEffect} from "react";
-import {Outlet, useLocation, useNavigate} from "react-router-dom";
+import {Outlet, useLocation, useNavigate} from "react-router";
 import {effect, signal, Signal} from '@vaadin/hilla-react-signals';
 
 const vaadin = window.Vaadin as {
