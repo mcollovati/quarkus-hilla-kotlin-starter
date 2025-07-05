@@ -19,8 +19,8 @@
         <skipUTs>false</skipUTs>
         <surefire-plugin.version>3.5.3</surefire-plugin.version>
 
-        <quarkus-hilla.version>24.7.0</quarkus-hilla.version>
-        <vaadin.version>24.7.6</vaadin.version>
+        <quarkus-hilla.version>24.8.1</quarkus-hilla.version>
+        <vaadin.version>24.8.0</vaadin.version>
         <selenide.version>7.9.3</selenide.version>
 
     </properties>
@@ -111,13 +111,6 @@
                         </goals>
                     </execution>
                 </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.github.mcollovati</groupId>
-                        <artifactId>aot-browser-finder-callable-workaround</artifactId>
-                        <version>${quarkus-hilla.version}</version>
-                    </dependency>
-                </dependencies>                
             </plugin>
             <plugin>
                 <groupId>${quarkus.platform.group-id}</groupId>
