@@ -33,7 +33,7 @@ jobs:
       - name: Production build
         run: |
           set -x -e -o pipefail
-          mvn -V -e -ntp package -Pproduction -DskipTests
+          mvn -V -e -ntp package -DskipTests
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
         id: commit-changes

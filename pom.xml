@@ -15,12 +15,12 @@
         <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
         <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
         <quarkus.platform.version>3.28.5</quarkus.platform.version>
-        <skipITs>true</skipITs>
+        <skipITs>false</skipITs>
         <skipUTs>false</skipUTs>
         <surefire-plugin.version>3.5.4</surefire-plugin.version>
 
-        <quarkus-hilla.version>24.9.1</quarkus-hilla.version>
-        <vaadin.version>24.9.3</vaadin.version>
+        <quarkus-hilla.version>25.0.0</quarkus-hilla.version>
+        <vaadin.version>25.0.2</vaadin.version>
         <selenide.version>7.11.1</selenide.version>
 
     </properties>
@@ -45,6 +45,7 @@
     </dependencyManagement>
 
     <dependencies>
+        <!-- Workaround for hilla:init-app :: hilla-spring-boot-starter -->
         <dependency>
             <groupId>com.github.mcollovati</groupId>
             <artifactId>quarkus-hilla-react</artifactId>
@@ -63,7 +64,7 @@
             <artifactId>kotlin-stdlib-jdk8</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.fasterxml.jackson.module</groupId>
+            <groupId>tools.jackson.module</groupId>
             <artifactId>jackson-module-kotlin</artifactId>
         </dependency>
         <dependency>
@@ -98,19 +99,6 @@
                 <configuration>
                     <parameters>true</parameters>
                 </configuration>
-            </plugin>
-            <plugin>
-                <!-- Workaround for hilla:init-app :: hilla-spring-boot-starter -->
-                <groupId>com.vaadin</groupId>
-                <artifactId>vaadin-maven-plugin</artifactId>
-                <version>${vaadin.version}</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>prepare-frontend</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>${quarkus.platform.group-id}</groupId>
@@ -207,37 +195,17 @@
 
     <profiles>
         <profile>
-            <!-- Production mode is activated using -Pproduction -->
-            <id>production</id>
+            <id>dev-mode-test</id>
+            <properties>
+                <skipITs>true</skipITs>
+            </properties>
             <dependencies>
                 <dependency>
-                    <groupId>com.github.mcollovati</groupId>
-                    <artifactId>quarkus-hilla-react</artifactId>
-                    <version>${quarkus-hilla.version}</version>
-                    <exclusions>
-                        <exclusion>
-                            <groupId>com.vaadin</groupId>
-                            <artifactId>vaadin-dev</artifactId>
-                        </exclusion>
-                    </exclusions>
+                    <groupId>com.vaadin</groupId>
+                    <artifactId>vaadin-dev</artifactId>
+                    <scope>test</scope>
                 </dependency>
             </dependencies>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>com.vaadin</groupId>
-                        <artifactId>vaadin-maven-plugin</artifactId>
-                        <version>${vaadin.version}</version>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>build-frontend</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
         </profile>
         <profile>
             <id>native</id>
